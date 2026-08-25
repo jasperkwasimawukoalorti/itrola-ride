@@ -1,7 +1,9 @@
+# Expo
+.expo/
+
 # Gradle files
 .gradle/
 build/
-.expo/
 
 # Local configuration file (sdk path, etc)
 local.properties
