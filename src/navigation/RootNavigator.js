@@ -11,6 +11,7 @@ import OTPScreen from '../screens/OTPScreen';
 import HomeScreen from '../screens/HomeScreen';
 import TripTrackingScreen from '../screens/TripTrackingScreen';
 import PaymentScreen from '../screens/PaymentScreen';
+import DriverHomeScreen from '../screens/DriverHomeScreen';
 
 const Stack = createNativeStackNavigator();
 
@@ -23,7 +24,7 @@ function AuthStack() {
   );
 }
 
-function AppStack() {
+function RiderStack() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Home" component={HomeScreen} />
@@ -33,20 +34,33 @@ function AppStack() {
   );
 }
 
+function DriverStack() {
+  return (
+    <Stack.Navigator screenOptions={{ headerShown: false }}>
+      <Stack.Screen name="DriverHome" component={DriverHomeScreen} />
+    </Stack.Navigator>
+  );
+}
+
 export default function RootNavigator() {
-  const { isAuthenticated, isLoading } = useAuth();
+  const { isAuthenticated, isLoading, role } = useAuth();
 
   if (isLoading) {
     return (
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.cream }}>
-        <ActivityIndicator size="large" color={colors.forestGreen} />
+      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center', backgroundColor: colors.background }}>
+        <ActivityIndicator size="large" color={colors.pink} />
       </View>
     );
   }
 
-  return (
-    <NavigationContainer>
-      {isAuthenticated ? <AppStack /> : <AuthStack />}
-    </NavigationContainer>
-  );
+  let content;
+  if (!isAuthenticated) {
+    content = <AuthStack />;
+  } else if (role === 'driver') {
+    content = <DriverStack />;
+  } else {
+    content = <RiderStack />;
+  }
+
+  return <NavigationContainer>{content}</NavigationContainer>;
 }

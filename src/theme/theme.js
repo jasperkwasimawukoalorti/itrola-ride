@@ -1,22 +1,23 @@
 /**
  * itrola Ride — brand theme
- * Pulled from the itrola true image "Kente & Forest" identity:
- * forest green, gold, cream, with kente-strip accents.
+ * Matched to the actual itrola true image logo: hot pink/magenta,
+ * cyan/blue, and charcoal. (Previous forest-green/gold/kente styling
+ * was carried over incorrectly from an unrelated project — this
+ * replaces it.)
  */
 export const colors = {
-  forestGreen: '#0F3D2E',   // primary — headers, buttons, active states
-  forestGreenDark: '#0A2B20',
-  gold: '#D4A017',          // accent — CTAs, highlights, fare/price text
-  goldLight: '#E8C766',
-  cream: '#FAF6EC',         // background
-  kenteRed: '#B3392C',      // used sparingly for alerts/cancel
-  charcoal: '#1E1E1E',      // primary text
-  slate: '#6B7280',         // secondary text
-  border: '#E4DCC8',
+  pink: '#EC1E7D',       // primary brand — "it" / "true image" in logo
+  pinkDark: '#C4155F',
+  cyan: '#00AEEF',        // secondary brand — "rola" in logo
+  cyanDark: '#0090C7',
+  charcoal: '#2D2D2D',    // badge background, primary text
+  slate: '#6B7280',       // secondary text
+  border: '#E5E7EB',
+  background: '#FFFFFF',  // clean white, matches logo's light backdrop
   white: '#FFFFFF',
-  success: '#2F7A4D',
-  warning: '#C9821A',
-  danger: '#B3392C',
+  success: '#2F9E5B',
+  warning: '#D9A017',
+  danger: '#D63A3A',
 };
 
 export const spacing = {
@@ -36,12 +37,12 @@ export const radius = {
 };
 
 export const typography = {
-  h1: { fontSize: 28, fontWeight: '800', color: colors.forestGreen },
-  h2: { fontSize: 22, fontWeight: '700', color: colors.forestGreen },
+  h1: { fontSize: 28, fontWeight: '800', color: colors.charcoal },
+  h2: { fontSize: 22, fontWeight: '700', color: colors.charcoal },
   h3: { fontSize: 17, fontWeight: '600', color: colors.charcoal },
   body: { fontSize: 15, fontWeight: '400', color: colors.charcoal },
   caption: { fontSize: 13, fontWeight: '400', color: colors.slate },
-  price: { fontSize: 24, fontWeight: '800', color: colors.gold },
+  price: { fontSize: 24, fontWeight: '800', color: colors.pink },
 };
 
 export const shadow = {

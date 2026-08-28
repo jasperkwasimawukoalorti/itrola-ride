@@ -7,13 +7,13 @@ export default function PrimaryButton({
   onPress,
   loading = false,
   disabled = false,
-  variant = 'primary', // 'primary' | 'gold' | 'outline' | 'danger'
+  variant = 'primary', // 'primary' | 'accent' | 'outline' | 'danger'
   style,
 }) {
   const isOutline = variant === 'outline';
   const bg =
-    variant === 'gold' ? colors.gold : variant === 'danger' ? colors.danger : colors.forestGreen;
-
+    variant === 'accent' ? colors.cyan : variant === 'danger' ? colors.danger : colors.pink;
+  
   return (
     <TouchableOpacity
       onPress={onPress}
@@ -27,9 +27,9 @@ export default function PrimaryButton({
       ]}
     >
       {loading ? (
-        <ActivityIndicator color={isOutline ? colors.forestGreen : colors.white} />
+        <ActivityIndicator color={isOutline ? colors.pink : colors.white} />
       ) : (
-        <Text style={[styles.text, isOutline && { color: colors.forestGreen }]}>{title}</Text>
+        <Text style={[styles.text, isOutline && { color: colors.pink }]}>{title}</Text>
       )}
     </TouchableOpacity>
   );
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
   outline: {
     backgroundColor: 'transparent',
     borderWidth: 1.5,
-    borderColor: colors.forestGreen,
+    borderColor: colors.pink,
   },
   disabled: { opacity: 0.5 },
   text: { color: colors.white, fontSize: 16, fontWeight: '700' },

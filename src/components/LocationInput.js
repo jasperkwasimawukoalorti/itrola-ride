@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet, ActivityIndicator } from 'react-native';
-import * as Location from 'expo-location';
 import { colors, spacing, radius, typography } from '../theme/theme';
 
 /**
- * Simple address text entry that geocodes via the device's geocoder.
- * Good enough for MVP; swap for Google Places Autocomplete later for a
- * proper type-ahead experience (needs a Places API key + billing).
+ * Address text entry geocoded via OpenStreetMap's Nominatim API.
+ * Android's built-in device geocoder (expo-location's geocodeAsync) is
+ * unreliable outside a handful of core regions and consistently fails
+ * for Ghanaian addresses — Nominatim is free, needs no API key, and is
+ * far more consistent here. Biased toward Ghana via countrycodes=gh.
  */
 export default function LocationInput({ label, value, onSelect, markerColor }) {
   const [text, setText] = useState(value || '');
@@ -18,13 +19,21 @@ export default function LocationInput({ label, value, onSelect, markerColor }) {
     setLoading(true);
     setError(null);
     try {
-      const results = await Location.geocodeAsync(text.trim());
-      if (results.length === 0) {
+      const query = encodeURIComponent(text.trim());
+      const url = `https://nominatim.openstreetmap.org/search?q=${query}&format=json&limit=1&countrycodes=gh`;
+      const res = await fetch(url, {
+        headers: {
+          // Nominatim's usage policy asks for an identifying User-Agent.
+          'User-Agent': 'itrolaRideApp/1.0 (itrola true image)',
+        },
+      });
+      const results = await res.json();
+      if (!results || results.length === 0) {
         setError('Could not find that place. Try a more specific address.');
         return;
       }
-      const { latitude, longitude } = results[0];
-      onSelect({ lat: latitude, lng: longitude, label: text.trim() });
+      const { lat, lon, display_name } = results[0];
+      onSelect({ lat: parseFloat(lat), lng: parseFloat(lon), label: display_name || text.trim() });
     } catch (e) {
       setError('Search failed. Check your connection.');
     } finally {
