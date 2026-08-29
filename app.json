@@ -7,7 +7,12 @@
     },
     "owner": "alortimawuko",
     "android": {
-      "package": "com.alortimawuko.itrolarideapp"
+      "package": "com.alortimawuko.itrolarideapp",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyDci0Bs4CLIfEU6bgZggmyNPrgVvhU13Z0"
+        }
+      }
     },
     "plugins": [
       [
