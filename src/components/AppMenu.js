@@ -53,6 +53,36 @@ export function MenuButton({ onPress, variant = 'light' }) {
   );
 }
 
+/**
+ * Builds the "Switch to Driver/Rider" (or "Add a Driver/Rider account") +
+ * "Log out" menu items from the current auth state. Shared across every
+ * screen's menu so the switching logic lives in exactly one place.
+ *
+ * Pass the whole object returned by useAuth() — it already has everything
+ * this needs (role, hasRiderSession, hasDriverSession, switchRole,
+ * beginAddRoleSession, logout).
+ */
+export function buildAccountMenuItems(auth) {
+  const { role, hasRiderSession, hasDriverSession, switchRole, beginAddRoleSession, logout } = auth;
+  const otherRole = role === 'driver' ? 'rider' : 'driver';
+  const otherHasSession = otherRole === 'driver' ? hasDriverSession : hasRiderSession;
+
+  const items = [];
+  if (otherHasSession) {
+    items.push({
+      label: otherRole === 'driver' ? 'Switch to Driver view' : 'Switch to Rider view',
+      onPress: () => switchRole(otherRole),
+    });
+  } else {
+    items.push({
+      label: otherRole === 'driver' ? 'Add a Driver account' : 'Add a Rider account',
+      onPress: beginAddRoleSession,
+    });
+  }
+  items.push({ label: 'Log out', danger: true, onPress: logout });
+  return items;
+}
+
 const styles = StyleSheet.create({
   backdrop: { flex: 1, backgroundColor: 'rgba(0,0,0,0.35)' },
   panel: {

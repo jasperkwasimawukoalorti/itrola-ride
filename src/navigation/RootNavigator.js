@@ -8,6 +8,7 @@ import { colors } from '../theme/theme';
 
 import LoginScreen from '../screens/LoginScreen';
 import OTPScreen from '../screens/OTPScreen';
+import DriverSignupScreen from '../screens/DriverSignupScreen';
 import HomeScreen from '../screens/HomeScreen';
 import TripTrackingScreen from '../screens/TripTrackingScreen';
 import PaymentScreen from '../screens/PaymentScreen';
@@ -20,6 +21,7 @@ function AuthStack() {
     <Stack.Navigator screenOptions={{ headerShown: false }}>
       <Stack.Screen name="Login" component={LoginScreen} />
       <Stack.Screen name="OTP" component={OTPScreen} />
+      <Stack.Screen name="DriverSignup" component={DriverSignupScreen} />
     </Stack.Navigator>
   );
 }
@@ -43,6 +45,9 @@ function DriverStack() {
 }
 
 export default function RootNavigator() {
+  // isAuthenticated already accounts for forceAuthFlow (adding a 2nd role's
+  // session) — see AuthContext.js. When that's true, this correctly falls
+  // back to AuthStack without touching the session already stored underneath.
   const { isAuthenticated, isLoading, role } = useAuth();
 
   if (isLoading) {

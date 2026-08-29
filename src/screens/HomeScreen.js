@@ -5,8 +5,7 @@ import * as Location from 'expo-location';
 import { colors, spacing, typography, radius, shadow } from '../theme/theme';
 import PrimaryButton from '../components/PrimaryButton';
 import LocationInput from '../components/LocationInput';
-import { MenuButton } from '../components/AppMenu';
-import AppMenu from '../components/AppMenu';
+import AppMenu, { MenuButton, buildAccountMenuItems } from '../components/AppMenu';
 import { requestTrip } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 
@@ -17,7 +16,7 @@ export default function HomeScreen({ navigation }) {
   const [requesting, setRequesting] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
   const mapRef = useRef(null);
-  const { logout } = useAuth();
+  const auth = useAuth();
 
   useEffect(() => {
     (async () => {
@@ -131,7 +130,7 @@ export default function HomeScreen({ navigation }) {
       <AppMenu
         visible={menuVisible}
         onClose={() => setMenuVisible(false)}
-        items={[{ label: 'Log out', danger: true, onPress: logout }]}
+        items={buildAccountMenuItems(auth)}
       />
     </View>
   );

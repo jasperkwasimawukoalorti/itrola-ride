@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, Alert, ScrollView } from 'react-native';
 import { colors, spacing, typography, radius, shadow } from '../theme/theme';
 import BrandAccent from '../components/BrandAccent';
-import AppMenu, { MenuButton } from '../components/AppMenu';
+import AppMenu, { MenuButton, buildAccountMenuItems } from '../components/AppMenu';
 import PrimaryButton from '../components/PrimaryButton';
 import { payForTrip, getTrip } from '../api/client';
 import { useAuth } from '../context/AuthContext';
@@ -23,7 +23,7 @@ export default function PaymentScreen({ route, navigation }) {
   const [paying, setPaying] = useState(false);
   const [waitingConfirm, setWaitingConfirm] = useState(false);
   const [menuVisible, setMenuVisible] = useState(false);
-  const { logout } = useAuth();
+  const auth = useAuth();
 
   const pollPaymentStatus = () => {
     const start = Date.now();
@@ -131,7 +131,7 @@ export default function PaymentScreen({ route, navigation }) {
       <AppMenu
         visible={menuVisible}
         onClose={() => setMenuVisible(false)}
-        items={[{ label: 'Log out', danger: true, onPress: logout }]}
+        items={buildAccountMenuItems(auth)}
       />
     </View>
   );

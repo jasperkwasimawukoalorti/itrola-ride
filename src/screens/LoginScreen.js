@@ -15,11 +15,20 @@ import BrandAccent from '../components/BrandAccent';
 import LogoMark from '../components/LogoMark';
 import PrimaryButton from '../components/PrimaryButton';
 import { requestOtp } from '../api/client';
+import { useAuth } from '../context/AuthContext';
 
 export default function LoginScreen({ navigation }) {
+  const { forceAuthFlow, hasRiderSession, hasDriverSession, cancelAddRoleSession } = useAuth();
+
+  // If we're here to add a second role's session, default the picker to
+  // whichever role is actually missing rather than always "rider".
+  const defaultRole = hasRiderSession && !hasDriverSession ? 'driver' : hasDriverSession && !hasRiderSession ? 'rider' : 'rider';
+
   const [phone, setPhone] = useState('+233');
-  const [role, setRole] = useState('rider'); // 'rider' | 'driver'
+  const [role, setRole] = useState(defaultRole);
   const [loading, setLoading] = useState(false);
+
+  const isAddingAccount = forceAuthFlow && (hasRiderSession || hasDriverSession);
 
   const handleContinue = async () => {
     if (phone.trim().length < 10) {
@@ -52,7 +61,9 @@ export default function LoginScreen({ navigation }) {
         <View style={styles.hero}>
           <LogoMark />
           <Text style={styles.logoText}>itrola Ride</Text>
-          <Text style={styles.tagline}>Move around Ghana, your way.</Text>
+          <Text style={styles.tagline}>
+            {isAddingAccount ? 'Add another account' : 'Move around Ghana, your way.'}
+          </Text>
         </View>
         <BrandAccent height={8} />
 
@@ -102,6 +113,17 @@ export default function LoginScreen({ navigation }) {
             >
               <Text style={{ color: colors.cyan, fontWeight: '600' }}>
                 New driver? Register here
+              </Text>
+            </TouchableOpacity>
+          )}
+
+          {isAddingAccount && (
+            <TouchableOpacity
+              onPress={cancelAddRoleSession}
+              style={{ marginTop: spacing.md, alignItems: 'center' }}
+            >
+              <Text style={{ color: colors.slate, fontWeight: '600' }}>
+                Cancel — keep my current session
               </Text>
             </TouchableOpacity>
           )}

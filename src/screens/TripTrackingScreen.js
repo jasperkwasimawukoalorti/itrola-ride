@@ -4,7 +4,7 @@ import { colors, spacing, typography, radius, shadow } from '../theme/theme';
 import BrandAccent from '../components/BrandAccent';
 import LogoMark from '../components/LogoMark';
 import PrimaryButton from '../components/PrimaryButton';
-import AppMenu, { MenuButton } from '../components/AppMenu';
+import AppMenu, { MenuButton, buildAccountMenuItems } from '../components/AppMenu';
 import { getTrip, cancelTrip } from '../api/client';
 import { useAuth } from '../context/AuthContext';
 
@@ -31,7 +31,7 @@ export default function TripTrackingScreen({ route, navigation }) {
   const [menuVisible, setMenuVisible] = useState(false);
   const pollRef = useRef(null);
   const noDriverTimerRef = useRef(null);
-  const { logout } = useAuth();
+  const auth = useAuth();
 
   const fetchTrip = async () => {
     try {
@@ -160,7 +160,7 @@ export default function TripTrackingScreen({ route, navigation }) {
       <AppMenu
         visible={menuVisible}
         onClose={() => setMenuVisible(false)}
-        items={[{ label: 'Log out', danger: true, onPress: logout }]}
+        items={buildAccountMenuItems(auth)}
       />
     </View>
   );

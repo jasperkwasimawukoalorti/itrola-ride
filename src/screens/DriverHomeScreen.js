@@ -5,7 +5,7 @@ import { colors, spacing, typography, radius, shadow } from '../theme/theme';
 import BrandAccent from '../components/BrandAccent';
 import LogoMark from '../components/LogoMark';
 import PrimaryButton from '../components/PrimaryButton';
-import AppMenu, { MenuButton } from '../components/AppMenu';
+import AppMenu, { MenuButton, buildAccountMenuItems } from '../components/AppMenu';
 import {
   setDriverAvailability,
   updateDriverLocation,
@@ -19,7 +19,8 @@ import { useAuth } from '../context/AuthContext';
 const POLL_INTERVAL_MS = 4000;
 
 export default function DriverHomeScreen() {
-  const { userId, phone, logout } = useAuth();
+  const auth = useAuth();
+  const { userId, phone } = auth;
   const [isAvailable, setIsAvailable] = useState(false);
   const [toggling, setToggling] = useState(false);
   const [trip, setTrip] = useState(null);
@@ -236,7 +237,7 @@ export default function DriverHomeScreen() {
       <AppMenu
         visible={menuVisible}
         onClose={() => setMenuVisible(false)}
-        items={[{ label: 'Log out', danger: true, onPress: logout }]}
+        items={buildAccountMenuItems(auth)}
       />
     </View>
   );
