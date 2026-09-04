@@ -1,7 +1,7 @@
-# Applying this patch to itrola-ride-app
+# Applying this patch to itrola-ride
 
 This folder contains **updated/new files only** — copy them into your
-existing `itrola-ride-app` project, overwriting the matching files.
+existing `itrola-ride` project, overwriting the matching files.
 
 ## Files to copy
 

@@ -10,7 +10,7 @@ React Native (Expo) app for riders. Wired directly to the itrola-ride-backend AP
 - Brand theme: forest green / gold / cream, kente-strip accents (`src/theme/theme.js`)
 
 ## Integrating into your existing Codespace project
-Your `itrola-ride-app` repo already has `src/api/client.js` — this build replaces it with
+Your `itrola-ride` repo already has `src/api/client.js` — this build replaces it with
 the full endpoint set (auth, trips, payments) using the same axios pattern you had.
 
 1. Copy the `src/` folder and `App.js` into your existing project, merging with what's there.
