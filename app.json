@@ -2,7 +2,9 @@
   "expo": {
     "icon": "./src/assets/icon.png",
     "extra": {
-      
+      "eas": {
+        "projectId": "cca30fd6-2606-429b-bb2f-b826e81a6348"
+      }
     },
     "owner": "alortimawuko",
     "android": {
